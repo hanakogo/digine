@@ -27,14 +27,14 @@ type StructToInj struct {
 func BindStruct(t *testing.T) {
 	struct1 := &StructToInj{"struct1"}
 	digine.Bind[StructToInj](struct1, digine.NewLabel("struct1"))
-	digine.AutoBindFields(struct1)
+	digine.StructBindFields(struct1)
 	t.Log(struct1)
 }
 
 func InjectStruct(t *testing.T) {
-	reqStruct1 := digine.AutoRequire[StructToInjWrapper]()
+	reqStruct1 := digine.StructRequire[StructToInjWrapper]()
 	t.Log(reqStruct1.Struct)
 	var struct1 = _tools.NewValuePtr[StructToInj]()
-	digine.AutoInject[StructToInj](struct1)
+	digine.StructInject[StructToInj](struct1)
 	t.Log(struct1)
 }

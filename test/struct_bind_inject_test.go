@@ -6,14 +6,14 @@ import (
 	"testing"
 )
 
-func TestAutoBindInject(t *testing.T) {
+func TestStructBindInject(t *testing.T) {
 	defer exceptiongo.NewExceptionHandler(func(exception *exceptiongo.Exception) {
 		message := exception.GetStackTraceMessage()
 		t.Error(message)
 	}).Deploy()
 
-	AutoBind(t)
-	AutoInject(t)
+	StructBind(t)
+	StructInject(t)
 }
 
 type St struct {
@@ -27,22 +27,22 @@ type StEl struct {
 	StrC *string `digine:"C"`
 }
 
-func AutoBind(t *testing.T) {
+func StructBind(t *testing.T) {
 	strA := "abc"
 	strB := "def"
 	strC := "ghi"
-	digine.AutoBindFields(&St{
+	digine.StructBindFields(&St{
 		StrA:  &strA,
 		StrB:  strB,
 		StEl2: StEl{StrC: &strC},
 	})
 }
 
-func AutoInject(t *testing.T) {
+func StructInject(t *testing.T) {
 	ptrTest := &St{}
-	digine.AutoInject[St](ptrTest)
+	digine.StructInject[St](ptrTest)
 	t.Log(*ptrTest)
 
-	require := digine.AutoRequire[St]()
+	require := digine.StructRequire[St]()
 	t.Log(*require)
 }

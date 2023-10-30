@@ -7,8 +7,8 @@ import (
 	"github.com/hanakogo/exceptiongo"
 )
 
-// AutoInject formally extract dependencies
-func AutoInject[T any](ptr *T) {
+// StructInject formally extract fields into struct
+func StructInject[T any](ptr *T) {
 	if !_tools.IsStructPointer(ptr) {
 		e := exceptiongo.NewException[_types.NotSupportedException]("only struct type is supported")
 		exceptiongo.Throw(e)
@@ -20,9 +20,9 @@ func AutoInject[T any](ptr *T) {
 	_core.AutoInject(ptr)
 }
 
-// AutoRequire a dirty way (for GC) to extract dependencies with a new object
-func AutoRequire[T any]() *T {
+// StructRequire a dirty way (for GC) to extract dependencies with a struct pointer
+func StructRequire[T any]() *T {
 	ptr := _tools.NewValuePtr[T]()
-	AutoInject[T](ptr)
+	StructInject[T](ptr)
 	return ptr
 }

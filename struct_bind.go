@@ -5,8 +5,8 @@ import (
 	"github.com/hanakogo/digine/internal/_tools"
 )
 
-// AutoBindFields inject fields with digine tag
-func AutoBindFields(obj any) {
+// StructBindFields inject fields with digine tag
+func StructBindFields(obj any) {
 	if !_tools.IsPointer(obj) {
 		obj = &obj
 	}

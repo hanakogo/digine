@@ -13,6 +13,7 @@ func TestBaseDI(t *testing.T) {
 	}).Deploy()
 	Inject(t)
 	Extract(t)
+	AnonymousStructTest(t)
 }
 
 func Inject(t *testing.T) {
@@ -26,4 +27,12 @@ func Extract(t *testing.T) {
 	strA := digine.Require[string](digine.NewLabel("strA"))
 	numA := digine.Require[int](digine.NewLabel("numA"))
 	t.Log(*strA, *numA)
+}
+
+func AnonymousStructTest(t *testing.T) {
+	anonymousStruct := digine.StructRequire[struct {
+		StrA *string `digine:"strA"`
+		NumA *int    `digine:"numA"`
+	}]()
+	t.Log(*anonymousStruct.StrA, *anonymousStruct.NumA)
 }
